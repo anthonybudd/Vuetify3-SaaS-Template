@@ -1,4 +1,8 @@
 # Vuetify Boilerplate
+<p align="center">
+<img width="500" src="https://raw.githubusercontent.com/anthonybudd/Vuetify-SPA-boilerplate/main/public/img/vuetify-mbp.png">
+</p>
+
 A very simple Vuetify boilerplate using Vue.js, Vuetify and Vuex.
 
 This project is designed to work with [AnthonyBudd/Express-Api-Boilerplate](https://github.com/anthonybudd/express-api-boilerplate)
@@ -13,4 +17,3 @@ npm install
 
 npm run serve
 ```
-
