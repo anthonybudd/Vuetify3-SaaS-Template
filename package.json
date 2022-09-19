@@ -5,8 +5,7 @@
     "scripts": {
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
-        "lint": "vue-cli-service lint",
-        "tag": "echo $(git rev-parse HEAD | cut -c1-8) && git tag -a sandbox $(git rev-parse HEAD | cut -c1-8) -m 'Deploy to sandbox' -f && git push --tags -f"
+        "lint": "vue-cli-service lint"
     },
     "prettier": {
         "trailingComma": "es5",

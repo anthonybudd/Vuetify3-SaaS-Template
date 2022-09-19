@@ -32,7 +32,7 @@ export default {
          * AccessToken, then will try and get a user object.
          */
         async initalizeOrRedirectToLogin() {
-            const skipAuthPages = ['/login', '/logout'];
+            const skipAuthPages = ['/login', '/logout']; // Auth not needed on these pages
             const skipAuth = new RegExp(skipAuthPages.join('|')).test(window.location.href);
 
             if (skipAuth) {
