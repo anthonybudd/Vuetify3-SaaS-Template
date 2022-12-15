@@ -1,6 +1,6 @@
 # Vuetify Boilerplate
 <p align="center">
-<img width="500" src="https://raw.githubusercontent.com/anthonybudd/Vuetify-SPA-boilerplate/main/public/img/screenshots.png?v=2">
+    <img src="https://raw.githubusercontent.com/anthonybudd/Vuetify-SPA-boilerplate/main/public/img/screenshots.png?v=2">
 </p>
 
 A very simple Vuetify boilerplate using Vue.js, Vuetify and Vuex.
