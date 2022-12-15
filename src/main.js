@@ -10,6 +10,7 @@ import App from './App.vue';
 import routes from './routes';
 import store from './store.js';
 import vuetify from './vuetify.js';
+import NavLayout from './views/components/NavLayout.vue';
 
 const router = new VueRouter({
     mode: 'history',
@@ -32,6 +33,7 @@ Vue.use(VueCurrencyFilter, {
     symbolSpacing: false,
     avoidEmptyDecimals: undefined
 });
+Vue.component('NavLayout', NavLayout);
 
 export default new Vue({
     router,
@@ -40,17 +42,25 @@ export default new Vue({
     render: (h) => h(App),
     methods: {
         errorHandler(err, cb) {
-            if (err.isAxiosError && err.request && err.response && err.response.config) {
-                console.warn(`AXIOS ERROR: ${err.request.status} ${err.response.config.method.toUpperCase()} - ${err.request.responseURL}`);
-                console.warn(err.response.data);
+            if (err.isAxiosError) {
+                if (!err.response) {
+                    console.error(err);
+                } else {
+                    console.error(err);
+                    console.warn(err.request.responseURL);
+                    console.warn(err.response.data);
+                    console.warn(err.request.status);
+                }
 
-                if (err.request.status !== 422) {
-                    if (err.response.data && err.response.data.code) {
-                        this.$notify({
-                            type: 'error',
-                            text: err.response.data.msg,
-                        });
-                    }
+                if (typeof cb === 'function') {
+                    cb(err.response);
+                } else {
+                    let text = 'Error';
+                    if (err.response && err.response.data && err.response.data.msg) text = err.response.data.msg;
+                    this.$notify({
+                        type: 'error',
+                        text,
+                    });
                 }
             } else {
                 console.error(err);

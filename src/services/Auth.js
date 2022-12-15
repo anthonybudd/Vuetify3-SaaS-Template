@@ -6,7 +6,7 @@ class Auth extends Service {
     }
 
     signUp(data) {
-        return this.axios.post('/auth/login', data);
+        return this.axios.post('/auth/sign-up', data);
     }
 
 }

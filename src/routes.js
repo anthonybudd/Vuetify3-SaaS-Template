@@ -4,11 +4,11 @@ export default [
         name: 'Dashboard',
         component: () => import('@/views/Dashboard.vue'),
     },
-    // {
-    //     path: '/account',
-    //     name: 'Account',
-    //     component: () => import('@/views/Account.vue'),
-    // },
+    {
+        path: '/account',
+        name: 'Account',
+        component: () => import('@/views/Account.vue'),
+    },
 
     {
         path: '/login',
