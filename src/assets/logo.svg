@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1030px" height="317px" viewBox="0 0 1030 317" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-2">
+            <text id="Startup" font-family="Futura-Medium, Futura" font-size="180" font-weight="400" letter-spacing="5.0999999" fill="#000000">
+                <tspan x="412.294727" y="213">Startu</tspan>
+                <tspan x="930.775586" y="213">p</tspan>
+            </text>
+            <g id="Group">
+                <polygon id="Rectangle" fill="#00C6BE" points="0 67 250 67 250 317 182.162193 249.162193 70.1310971 249.162193 70.1310971 137.131097"></polygon>
+                <polygon id="Rectangle" fill="#FF4A4B" points="69 0 319 0 319 250 251.162193 182.162193 139.131097 182.162193 139.131097 70.1310971"></polygon>
+                <rect id="Rectangle-2" fill="#00467B" x="137" y="67" width="114" height="114"></rect>
+            </g>
+            <g id="Group">
+                <polygon id="Rectangle" fill="#00C6BE" points="0 67 250 67 250 317 182.162193 249.162193 70.1310971 249.162193 70.1310971 137.131097"></polygon>
+                <polygon id="Rectangle" fill="#FF4A4B" points="69 0 319 0 319 250 251.162193 182.162193 139.131097 182.162193 139.131097 70.1310971"></polygon>
+                <rect id="Rectangle-2" fill="#00467B" x="137" y="67" width="114" height="114"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

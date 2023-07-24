@@ -9,30 +9,27 @@
             min-width="400"
             variant="elevated"
           >
-            <v-form>
+            <v-form v-model="isValid">
               <v-img
                 height="75"
                 class="my-4"
                 src="@/assets/logo.svg"
               />
               <v-card-title>
-                Log in
+                Reset Password
               </v-card-title>
-              <v-card-subtitle>
-                user@example.com / Password@1234
-              </v-card-subtitle>
               <v-card-text>
                 <v-text-field
-                  v-model="login.email"
-                  @keydown.enter.prevent="onClickLogin"
+                  v-model="reset.email"
                   label="Email"
-                  :rules="rules.email"
                   variant="outlined"
                   density="compact"
+                  disabled
                 ></v-text-field>
                 <v-text-field
-                  v-model="login.password"
-                  @keydown.enter.prevent="onClickLogin"
+                  v-model="reset.password"
+                  @keydown.enter.prevent="onClickSubmit"
+                  :rules="rules.password"
                   label="Password"
                   variant="outlined"
                   density="compact"
@@ -44,32 +41,18 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
-                  variant="text"
-                  @click="$router.push('/sign-up')"
-                >
-                  Sign-up
-                </v-btn>
-                <v-btn
                   color="primary"
                   variant="flat"
                   min-width="140"
                   :loading="isLoading"
-                  @click="onClickLogin"
+                  :disabled="!isValid"
+                  @click="onClickSubmit"
                 >
-                  Log in
+                  Reset Password
                 </v-btn>
               </v-card-actions>
             </v-form>
           </v-card>
-
-          <p class="text-center mt-2">
-            <router-link
-              to="/forgot"
-              class="text-decoration-underline text-white"
-            >
-              Forgot Password
-            </router-link>
-          </p>
         </v-col>
       </v-row>
     </v-responsive>
@@ -82,36 +65,53 @@
 export default {
   data: () => ({
     isLoading: false,
+    isValid: false,
 
-    login: {
-      // email: 'user@example.com',
-      // password: 'Password@1234',
+    reset: {
       email: '',
       password: '',
+      passwordResetKey: '',
     },
 
     rules: {
-      email: [
-        (v) => !!v || 'E-mail is required',
-        (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'E-mail must be valid',
+      password: [
+        (v) => !!v || 'Password is required',
+        (v) => (v.length > 7) || 'Password must be more than 8 characters',
+        (v) => /[a-z]/.test(v) || 'Password must contain at least 1 lowercase letter',
+        (v) => /[A-Z]/.test(v) || 'Password must contain at least 1 uppercase letter',
+        (v) => /[0-9]/.test(v) || 'Password must contain at least 1 number',
       ],
     }
   }),
 
+  computed: {
+    passwordResetKey() {
+      return this.$route.params.passwordResetKey;
+    }
+  },
+
+  async mounted() {
+    try {
+      const { data: user } = await this.$root.API.auth.getUserByResetKey(this.passwordResetKey);
+      this.reset.email = user.email;
+    } catch (error) {
+      this.$notify({
+        text: 'Invalid Link',
+        type: 'error'
+      });
+    }
+  },
+
   methods: {
-    async onClickLogin() {
+    async onClickSubmit() {
       try {
-        this.isLoading = true;
-        const { data } = await this.$root.API.auth.login(this.login);
+        this.isLoading = false;
+        this.reset.passwordResetKey = this.passwordResetKey;
+        const { data } = await this.$root.API.auth.reset(this.reset);
         await this.$root.login(data.accessToken);
         this.$router.push('/dashboard');
       } catch (error) {
-        await this.$root.errorHandler(error, (AE) => {
-          this.$notify({
-            text: 'Incorrect email or password',
-            type: 'error'
-          });
-        });
+        await this.$root.errorHandler(error);
       } finally {
         this.isLoading = false;
       }

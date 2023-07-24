@@ -7,6 +7,18 @@ A very simple Vuetify boilerplate using Vue.js, Vuetify and Vuex.
 
 This project is designed to work with [AnthonyBudd/Express-Api-Boilerplate](https://github.com/anthonybudd/express-api-boilerplate)
 
+# TODO
+Auth
+- Login
+- Sign-up
+- Forgot
+- Reset
+- Invite
+
+Account
+- Profile
+- Account
+
 
 ### Set-up
 ```sh
