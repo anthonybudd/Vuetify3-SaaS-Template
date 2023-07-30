@@ -14,62 +14,61 @@ export default {
       API
     };
   },
-  async mounted() {
-    this.initalizeOrRedirectToLogin();
+  async beforeMount() {
+    const skipAuthPages = ['/login', '/sign-up', '/forgot', '/reset/', '/logout', '/invite/']; // Auth not needed on these pages
+    const skipAuth = new RegExp(skipAuthPages.join('|')).test(window.location.href);
+
+    if (skipAuth) return;
+
+    const redirectToLogin = () => this.$router.push({
+      path: '/logout',
+      query: {
+        redirect: btoa(window.location.pathname),
+      }
+    });
+
+    const accessToken = localStorage.getItem('AccessToken');
+    if (!accessToken) return redirectToLogin();
+
+    this.API.setJWT(accessToken);
+
+    try {
+      const { data: user } = await this.API.user.get();
+      this.setUser(user);
+
+      const lastGroupID = localStorage.getItem('lastGroupID');
+      const lastGroup = user.Groups.filter(({ id }) => (id === lastGroupID)).pop();
+      if (lastGroup) {
+        this.setGroup(lastGroup);
+      } else if (user.Groups[0]) {
+        this.setGroup(user.Groups[0]);
+      }
+    } catch (error) {
+      redirectToLogin();
+      this.$root.errorHandler(error);
+    }
   },
   methods: {
-    ...mapMutations(['setUser']),
+    ...mapMutations(['setUser', 'setGroup']),
 
     async login(accessToken) {
       localStorage.setItem('AccessToken', accessToken);
       this.API.setJWT(accessToken);
       const { data: user } = await this.API.user.get();
       this.setUser(user);
+
+      const lastGroupID = localStorage.getItem('lastGroupID');
+      const lastGroup = user.Groups.filter(({ id }) => (id === lastGroupID)).pop();
+      if (lastGroup) {
+        this.setGroup(lastGroup);
+      } else if (user.Groups[0]) {
+        this.setGroup(user.Groups[0]);
+      }
+
       if (this.$route.query.redirect) {
         this.$router.push(atob(this.$route.query.redirect));
       } else {
         this.$router.push('/');
-      }
-    },
-
-    /**
-     * initalizeOrRedirectToLogin()
-     * 
-     * This function starts the App. It checks for a locally stored
-     * AccessToken, then will try and get a user object.
-     */
-    async initalizeOrRedirectToLogin() {
-      const skipAuthPages = ['/login', '/sign-up', '/forgot', '/reset/', '/logout', '/invite/']; // Auth not needed on these pages
-      const skipAuth = new RegExp(skipAuthPages.join('|')).test(window.location.href);
-
-      if (skipAuth) {
-        this.hasInitialized = true;
-        return;
-      }
-
-      const redirectToLogin = () => this.$router.push({
-        path: '/logout',
-        query: {
-          redirect: btoa(window.location.pathname),
-        }
-      });
-
-      const accessToken = localStorage.getItem('AccessToken');
-      if (!accessToken) {
-        this.hasInitialized = true;
-        return redirectToLogin();
-      }
-
-      this.API.setJWT(accessToken);
-
-      try {
-        const { data: user } = await this.API.user.get();
-        this.setUser(user);
-        this.hasInitialized = true;
-      } catch (error) {
-        this.hasInitialized = true;
-        redirectToLogin();
-        this.$root.errorHandler(error);
       }
     },
 

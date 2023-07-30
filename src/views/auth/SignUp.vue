@@ -62,7 +62,7 @@
                   hide-details="auto"
                 ></v-text-field>
 
-                <v-row>
+                <v-row class="mb-2">
                   <v-col class="pb-0">
                     <v-checkbox
                       hide-details="auto"
@@ -86,6 +86,14 @@
                     <p>{{ errors.tos }}</p>
                   </v-col>
                 </v-row>
+
+                <v-card
+                  color="#eee"
+                  elevation="0"
+                  class="py-4 text-h6 text-center"
+                >
+                  PUT CAPTCHA HERE
+                </v-card>
               </v-card-text>
 
               <v-card-actions>

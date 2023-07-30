@@ -1,5 +1,8 @@
 <template>
-    <v-container fluid>
+    <v-container
+        fluid
+        class="px-0 py-0"
+    >
         <v-row>
             <v-col>
                 <p class="text-h4">Account</p>
@@ -45,7 +48,10 @@
                         <v-col cols="4">
                             <p class="text-h6 font-weight-regular">Email</p>
                         </v-col>
-                        <v-col cols="4">
+                        <v-col
+                            xs="12"
+                            md="4"
+                        >
                             <v-text-field
                                 v-model="_user.email"
                                 label="Email"
@@ -60,7 +66,10 @@
                         <v-col cols="4">
                             <p class="text-h6 font-weight-regular">Name</p>
                         </v-col>
-                        <v-col cols="2">
+                        <v-col
+                            xs="12"
+                            md="2"
+                        >
                             <v-text-field
                                 v-model="_user.firstName"
                                 :rules="rules.required"
@@ -70,7 +79,10 @@
                                 hide-details="auto"
                             ></v-text-field>
                         </v-col>
-                        <v-col cols="2">
+                        <v-col
+                            xs="12"
+                            md="2"
+                        >
                             <v-text-field
                                 v-model="_user.lastName"
                                 :rules="rules.required"
@@ -86,7 +98,10 @@
                         <v-col cols="4">
                             <p class="text-h6 font-weight-regular">Bio</p>
                         </v-col>
-                        <v-col cols="4">
+                        <v-col
+                            xs="12"
+                            md="4"
+                        >
                             <v-textarea
                                 v-model="_user.bio"
                                 label="Bio"
@@ -98,7 +113,8 @@
                         <v-divider></v-divider>
 
                         <v-col
-                            cols="8"
+                            xs="12"
+                            md="8"
                             class="text-right"
                         >
                             <v-btn
@@ -117,7 +133,6 @@
 
         <v-row v-if="view === 'Group'">
             <v-col>
-
                 <p class="text-h5">Group</p>
                 <p class="text-h6 text-medium-emphasis font-weight-regular"><small>Add and remove users from your group</small></p>
                 <v-divider class="mt-1"></v-divider>
@@ -126,7 +141,10 @@
                     <v-col cols="4">
                         <p class="text-h6 font-weight-regular">Group Name</p>
                     </v-col>
-                    <v-col cols="4">
+                    <v-col
+                        xs="12"
+                        md="4"
+                    >
                         <v-form v-model="isValidGroup">
                             <v-text-field
                                 v-model="_group.name"
@@ -143,7 +161,10 @@
                     <v-col cols="4">
                         <p class="text-h6 font-weight-regular">User</p>
                     </v-col>
-                    <v-col cols="4">
+                    <v-col
+                        xs="12"
+                        md="4"
+                    >
                         <v-form v-model="isValidInvite">
                             <v-text-field
                                 v-model="inviteEmail"
@@ -207,7 +228,7 @@
                                             color="primary"
                                             size="small"
                                         >
-                                            Open Dialog
+                                            Remove
                                         </v-btn>
                                     </template>
                                     <v-card>
@@ -244,8 +265,8 @@
                     </v-col>
 
                     <v-col
-                        cols="8"
                         class="text-right"
+                        cols="10"
                     >
                         <v-btn
                             color="primary"
@@ -338,7 +359,7 @@ import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
-            view: 'Group',
+            view: 'Profile', // Profile, Group, Billing
             isLoading: false,
 
             _user: {},

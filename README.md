@@ -1,23 +1,11 @@
-# Vuetify Boilerplate
+# Vuetify3 SaaS Boilerplate
 <p align="center">
     <img src="https://raw.githubusercontent.com/anthonybudd/Vuetify-SPA-boilerplate/main/public/img/screenshots.png?v=2">
 </p>
 
-A very simple Vuetify boilerplate using Vue.js, Vuetify and Vuex.
+A very simple SaaS boilerplate built on Vuetify3.
 
 This project is designed to work with [AnthonyBudd/Express-Api-Boilerplate](https://github.com/anthonybudd/express-api-boilerplate)
-
-# TODO
-Auth
-- Login
-- Sign-up
-- Forgot
-- Reset
-- Invite
-
-Account
-- Profile
-- Account
 
 
 ### Set-up

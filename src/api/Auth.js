@@ -9,6 +9,10 @@ class Auth extends Service {
         return this.axios.post('/auth/sign-up', data);
     }
 
+    verifyEmail(emailVerificationKey) {
+        return this.axios.post('/auth/verify-email', { emailVerificationKey });
+    }
+
     getUserByInviteKey(inviteKey) {
         return this.axios.get(`/auth/get-user-by-invite-key/${inviteKey}`);
     }

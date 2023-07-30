@@ -6,60 +6,10 @@
           <v-card
             class="mx-auto"
             max-width="600"
-            min-width="400"
+            min-width="350"
             variant="elevated"
           >
-            <v-form>
-              <v-img
-                height="75"
-                class="my-4"
-                src="@/assets/logo.svg"
-              />
-              <v-card-title>
-                Log in
-              </v-card-title>
-              <v-card-subtitle>
-                user@example.com / Password@1234
-              </v-card-subtitle>
-              <v-card-text>
-                <v-text-field
-                  v-model="login.email"
-                  @keydown.enter.prevent="onClickLogin"
-                  label="Email"
-                  :rules="rules.email"
-                  variant="outlined"
-                  density="compact"
-                ></v-text-field>
-                <v-text-field
-                  v-model="login.password"
-                  @keydown.enter.prevent="onClickLogin"
-                  label="Password"
-                  variant="outlined"
-                  density="compact"
-                  type="password"
-                  required
-                ></v-text-field>
-              </v-card-text>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                  variant="text"
-                  @click="$router.push('/sign-up')"
-                >
-                  Sign-up
-                </v-btn>
-                <v-btn
-                  color="primary"
-                  variant="flat"
-                  min-width="140"
-                  :loading="isLoading"
-                  @click="onClickLogin"
-                >
-                  Log in
-                </v-btn>
-              </v-card-actions>
-            </v-form>
+            <login-form @onLogin="onLogin"></login-form>
           </v-card>
 
           <p class="text-center mt-2">
@@ -79,41 +29,20 @@
 
 <script>
 
+import LoginForm from './../../components/LoginForm.vue';
+
 export default {
-  data: () => ({
-    isLoading: false,
-
-    login: {
-      // email: 'user@example.com',
-      // password: 'Password@1234',
-      email: '',
-      password: '',
-    },
-
-    rules: {
-      email: [
-        (v) => !!v || 'E-mail is required',
-        (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'E-mail must be valid',
-      ],
-    }
-  }),
+  components: {
+    LoginForm
+  },
 
   methods: {
-    async onClickLogin() {
+    async onLogin({ accessToken }) {
       try {
-        this.isLoading = true;
-        const { data } = await this.$root.API.auth.login(this.login);
-        await this.$root.login(data.accessToken);
+        await this.$root.login(accessToken);
         this.$router.push('/dashboard');
       } catch (error) {
-        await this.$root.errorHandler(error, (AE) => {
-          this.$notify({
-            text: 'Incorrect email or password',
-            type: 'error'
-          });
-        });
-      } finally {
-        this.isLoading = false;
+        await this.$root.errorHandler(error);
       }
     },
   },

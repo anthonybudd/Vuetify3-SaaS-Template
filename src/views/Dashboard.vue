@@ -1,6 +1,50 @@
 <template>
     <v-container fluid>
         <v-row dense>
+            <v-col cols="12">
+                <v-card>
+                    <v-row>
+                        <v-col cols="3">
+
+                            <v-row>
+                                <v-col cols="12">
+                                    <v-icon
+                                        icon="mdi-view-dashboard"
+                                        size="large"
+                                    />
+                                </v-col>
+                                <v-col cols="8">
+                                    <v-row align="center">
+                                        <v-col
+                                            class="text-h2"
+                                            cols="6"
+                                        >
+                                            23&deg;C
+                                        </v-col>
+                                        <v-col cols="6">
+                                            <v-img
+                                                src="https://cdn.vuetifyjs.com/images/cards/sun.png"
+                                                alt="Sunny image"
+                                                width="92"
+                                            ></v-img>
+                                        </v-col>
+                                    </v-row>
+                                </v-col>
+                            </v-row>
+
+                        </v-col>
+                        <v-divider vertical></v-divider>
+                        <v-col cols="3">x</v-col>
+                        <v-divider vertical></v-divider>
+                        <v-col cols="3">x</v-col>
+                        <v-divider vertical></v-divider>
+                        <v-col cols="3">x</v-col>
+                    </v-row>
+                </v-card>
+            </v-col>
+        </v-row>
+
+        <v-row dense>
             <v-col cols="4">
                 <v-card
                     class="mx-auto"
