@@ -45,10 +45,15 @@
                     <v-divider class="mt-1"></v-divider>
 
                     <v-row class="mt-1">
-                        <v-col cols="4">
+                        <v-col
+                            cols="12"
+                            xs="12"
+                            md="4"
+                        >
                             <p class="text-h6 font-weight-regular">Email</p>
                         </v-col>
                         <v-col
+                            cols="12"
                             xs="12"
                             md="4"
                         >
@@ -63,11 +68,18 @@
                         </v-col>
                         <v-divider></v-divider>
 
-                        <v-col cols="4">
+
+                        <v-col
+                            cols="12"
+                            xs="12"
+                            md="4"
+                        >
                             <p class="text-h6 font-weight-regular">Name</p>
                         </v-col>
                         <v-col
-                            xs="12"
+                            cols="12"
+                            xs="6"
+                            sm="6"
                             md="2"
                         >
                             <v-text-field
@@ -80,7 +92,9 @@
                             ></v-text-field>
                         </v-col>
                         <v-col
-                            xs="12"
+                            cols="12"
+                            xs="6"
+                            sm="6"
                             md="2"
                         >
                             <v-text-field
@@ -95,10 +109,15 @@
                         <v-divider></v-divider>
 
 
-                        <v-col cols="4">
+                        <v-col
+                            cols="12"
+                            xs="12"
+                            md="4"
+                        >
                             <p class="text-h6 font-weight-regular">Bio</p>
                         </v-col>
                         <v-col
+                            cols="12"
                             xs="12"
                             md="4"
                         >
@@ -288,10 +307,16 @@
                 <v-divider class="mt-1"></v-divider>
 
                 <v-row class="mt-1">
-                    <v-col cols="4">
+                    <v-col
+                        xs="12"
+                        md="4"
+                    >
                         <p class="text-h6 font-weight-regular">Card</p>
                     </v-col>
-                    <v-col cols="4">
+                    <v-col
+                        xs="12"
+                        md="4"
+                    >
                         <v-alert
                             color="warning"
                             icon="$warning"
