@@ -1,6 +1,6 @@
 import Service from './Service';
 
-class Groups extends Service {
+class Group extends Service {
     get(groupID) {
         return this.axios.get(`/groups/${groupID}?with=users`);
     }
@@ -10,12 +10,16 @@ class Groups extends Service {
     }
 
     invite(groupID, email) {
-        return this.axios.post(`/groups/${groupID}/users/invite`, { email });
+        return this.axios.post(`/groups/${groupID}`, { email });
     }
 
-    removeUser(groupID, userID) {
+    setRole(groupID, userID, role) {
+        return this.axios.post(`/groups/${groupID}/users/${userID}/set-role`, { role });
+    }
+
+    delete(groupID, userID) {
         return this.axios.delete(`/groups/${groupID}/users/${userID}`);
     }
 }
 
-export default Groups;
+export default Group;

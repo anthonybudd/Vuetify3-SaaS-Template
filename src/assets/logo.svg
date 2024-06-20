@@ -1,19 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="1030px" height="317px" viewBox="0 0 1030 317" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
-    <title>Logo</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Logo-Group">
-            <g id="Logo">
-                <polygon id="Rectangle" fill="#00C6BE" points="0 67 250 67 250 317 182.162193 249.162193 70.1310971 249.162193 70.1310971 137.131097"></polygon>
-                <polygon id="Rectangle" fill="#FF4A4B" points="69 0 319 0 319 250 251.162193 182.162193 139.131097 182.162193 139.131097 70.1310971"></polygon>
-                <rect id="Rectangle-2" fill="#00467B" x="137" y="67" width="114" height="114"></rect>
-            </g>
-            <text id="SaaS" font-family="Futura-Medium, Futura" font-size="200" font-weight="400" letter-spacing="5.66666651" fill="#000000">
-                <tspan x="401.643229" y="232">SaaS</tspan>
-            </text>
-        </g>
-    </g>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M261.126 140.65L164.624 307.732L256.001 466L377.028 256.5L498.001 47H315.192L261.126 140.65Z" fill="#1697F6"/>
+<path d="M135.027 256.5L141.365 267.518L231.64 111.178L268.731 47H256H14L135.027 256.5Z" fill="#AEDDFF"/>
+<path d="M315.191 47C360.935 197.446 256 466 256 466L164.624 307.732L315.191 47Z" fill="#1867C0"/>
+<path d="M268.731 47C76.0026 47 141.366 267.518 141.366 267.518L268.731 47Z" fill="#7BC6FF"/>
 </svg>

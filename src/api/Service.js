@@ -5,7 +5,7 @@ class Service {
         this.JWT = JWT;
 
         this.axios = axios.create({
-            baseURL: process.env.VUE_APP_BACKEND_URL,
+            baseURL: import.meta.env.VITE_BACKEND_URL,
             headers: {
                 Authorization: `Bearer ${JWT}`,
             }

@@ -1,36 +1,16 @@
 import Service from './Service';
 
 class Auth extends Service {
-    login(data) {
-        return this.axios.post('/auth/login', data);
+    login(auth) {
+        return this.axios.post(`/auth/login`, auth);
     }
 
-    signUp(data) {
-        return this.axios.post('/auth/sign-up', data);
+    signUp(signUp) {
+        return this.axios.post(`/auth/sign-up`, signUp);
     }
 
-    verifyEmail(emailVerificationKey) {
-        return this.axios.post('/auth/verify-email', { emailVerificationKey });
-    }
-
-    getUserByInviteKey(inviteKey) {
-        return this.axios.get(`/auth/get-user-by-invite-key/${inviteKey}`);
-    }
-
-    invite(data) {
-        return this.axios.post(`/auth/invite`, data);
-    }
-
-    forgot(data) {
-        return this.axios.post('/auth/forgot', data);
-    }
-
-    getUserByResetKey(passwordResetKey) {
-        return this.axios.get(`/auth/get-user-by-reset-key/${passwordResetKey}`);
-    }
-
-    reset(data) {
-        return this.axios.post('/auth/reset', data);
+    authcheck() {
+        return this.axios.get('/_authcheck');
     }
 }
 

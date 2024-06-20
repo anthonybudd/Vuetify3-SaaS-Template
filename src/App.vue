@@ -1,134 +1,66 @@
 <template>
-  <router-view />
+    <router-view v-if="appLoaded" />
+    <notifications />
 </template>
 
-<script>
-import API from '@/api/API';
+<script setup>
+import { useNotification } from '@kyvg/vue3-notification';
+import { useRoute, useRouter } from 'vue-router';
+import { ref, onMounted, inject } from 'vue';
+import { useStore } from 'vuex';
 
-import { mapMutations } from 'vuex';
+const api = inject('api');
+const route = useRoute();
+const router = useRouter();
+const store = useStore();
+const { notify } = useNotification();
+const errorHandler = inject('errorHandler');
 
-export default {
-  name: 'App',
-  data() {
-    return {
-      API
-    };
-  },
-  async beforeMount() {
-    const skipAuthPages = ['/login', '/sign-up', '/forgot', '/reset/', '/logout', '/invite/']; // Auth not needed on these pages
-    const skipAuth = new RegExp(skipAuthPages.join('|')).test(window.location.href);
+const appLoaded = ref(false);
 
-    if (skipAuth) return;
+const skipAuthOnTheseUrls = ['/login', '/sign-up'];
 
-    const redirectToLogin = () => this.$router.push({
-      path: '/logout',
-      query: {
-        redirect: btoa(window.location.pathname),
-      }
-    });
 
+onMounted(async () => {
+    // Auth init 
+    const skipAuth = new RegExp(skipAuthOnTheseUrls.join('|')).test(window.location.href);
+    if (skipAuth) return appLoaded.value = true;
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('access_token')) localStorage.setItem('AccessToken', urlParams.get('access_token'));
     const accessToken = localStorage.getItem('AccessToken');
-    if (!accessToken) return redirectToLogin();
+    if (!accessToken) {
+        appLoaded.value = true;
+        router.push('/logout');
+    } else {
+        try {
+            api.setJWT(accessToken);
+            const { data: user } = await api.user.get();
+            store.commit('setUser', user);
 
-    this.API.setJWT(accessToken);
-
-    try {
-      const { data: user } = await this.API.user.get();
-      this.setUser(user);
-
-      const lastGroupID = localStorage.getItem('lastGroupID');
-      const lastGroup = user.Groups.filter(({ id }) => (id === lastGroupID)).pop();
-      if (lastGroup) {
-        this.setGroup(lastGroup);
-      } else if (user.Groups[0]) {
-        this.setGroup(user.Groups[0]);
-      }
-    } catch (error) {
-      redirectToLogin();
-      this.$root.errorHandler(error);
-    }
-  },
-  methods: {
-    ...mapMutations(['setUser', 'setGroup']),
-
-    async login(accessToken) {
-      localStorage.setItem('AccessToken', accessToken);
-      this.API.setJWT(accessToken);
-      const { data: user } = await this.API.user.get();
-      this.setUser(user);
-
-      const lastGroupID = localStorage.getItem('lastGroupID');
-      const lastGroup = user.Groups.filter(({ id }) => (id === lastGroupID)).pop();
-      if (lastGroup) {
-        this.setGroup(lastGroup);
-      } else if (user.Groups[0]) {
-        this.setGroup(user.Groups[0]);
-      }
-
-      if (this.$route.query.redirect) {
-        this.$router.push(atob(this.$route.query.redirect));
-      } else {
-        this.$router.push('/');
-      }
-    },
-
-    errorHandler(error, cb) {
-      console.error(error);
-      if (typeof cb === 'function') {
-
-        class AxiosError {
-          constructor(error) {
-            this.error = error;
-          }
-
-          getStatus() {
-            try {
-              return this.error.request.status;
-            } catch (error) {
-              return null;
+            let lastGroupID = localStorage.getItem('lastGroupID');
+            let lastGroup;
+            for (const g of user.Groups) {
+                if (g.id === lastGroupID) lastGroup = g;
             }
-          }
-
-          getData() {
-            try {
-              return this.error.response.data;
-            } catch (error) {
-              return null;
+            if (lastGroup) {
+                const { data: group } = await api.group.get(lastGroup.id);
+                store.commit('setGroup', group);
+            } else if (user.Groups[0]) {
+                const { data: group } = await api.groups.get(user.Groups[0].id);
+                store.commit('setGroup', group);
             }
-          }
-
-          getFormErrors() {
-            try {
-              const errorBag = {};
-              Object.entries(this.error.response.data.errors).map(
-                ([key, { msg }]) => (errorBag[key] = msg)
-              );
-              return errorBag;
-            } catch (error) {
-              return {};
-            }
-          }
-
-          getErrorCode() {
-            try {
-              return this.error.response.data.code;
-            } catch (error) {
-              return '';
-            }
-          }
-
-          getErrorMsg() {
-            try {
-              return this.error.response.data.msg;
-            } catch (error) {
-              return '';
-            }
-          }
+        } catch (e) {
+            errorHandler(error, (data, code, error) => {
+                router.push('/logout');
+            });
+        } finally {
+            appLoaded.value = true;
         }
-
-        cb(new AxiosError(error));
-      }
     }
-  }
-};
+
+
+    await router.isReady();
+    if (route.query.email_verified) notify('Email verified successfully');
+
+});
 </script>

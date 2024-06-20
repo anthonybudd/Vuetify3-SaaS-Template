@@ -5,16 +5,16 @@ class User extends Service {
         return this.axios.get('/user');
     }
 
-    getByInviteKey(inviteKey) {
-        return this.axios.get(`/user/invite-key/${inviteKey}`);
+    update(user) {
+        return this.axios.post(`/user`, user);
     }
 
-    update(user) {
-        return this.axios.post('/user', user);
+    resendVerificationEmail() {
+        return this.axios.post(`/user/resend-verification-email`);
     }
 
     updatePassword(password) {
-        return this.axios.post('/user/update-password', password);
+        return this.axios.post(`/user/update-password`, password);
     }
 }
 

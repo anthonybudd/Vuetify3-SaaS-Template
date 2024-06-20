@@ -1,19 +1,30 @@
-# Vuetify3 SaaS Boilerplate
+# Vuetify 3 SaaS Boilerplate
 <p align="center">
     <img src="https://raw.githubusercontent.com/anthonybudd/Vuetify-SPA-boilerplate/main/public/img/screenshots.png?v=2">
 </p>
 
-A very simple SaaS boilerplate built on Vuetify3.
+<!--
+Todo:
+- api auth.js
+SignUp
+ForgotPassword
+ResetPassword
 
-This project is designed to work with [AnthonyBudd/Express-Api-Boilerplate](https://github.com/anthonybudd/express-api-boilerplate)
+- group switching
+-> groups
+-->
 
+A minimal SaaS boilerplate built using Vuetify 3. This project was built to work out of the box with [AnthonyBudd/Express-TS-Api-Boilerplate](https://github.com/anthonybudd/express-ts-api-boilerplate) as the backend.
 
-### Set-up
+- 🔐 Login, Sign-up, ForgotPassword
+- 📈 Dashboard
+- 👥 Manage Account/Group
+- 💾 CRUD Model Example
+
 ```sh
-git clone git@github.com:anthonybudd/Vuetify-SPA-boilerplate.git
-cd Vuetify-SPA-boilerplate
+git clone git@github.com:anthonybudd/Vuetify3-SaaS-Boilerplate.git
+cd Vuetify3-SaaS-Boilerplate
 cp .env.example .env
-npm install
-
-npm run serve
+npm i
+npm run dev
 ```

@@ -1,50 +1,103 @@
-<template>
-  <v-container class="fill-height">
-    <v-responsive class="align-center fill-height">
-      <v-row class="d-flex align-center justify-center">
-        <v-col cols="auto">
-          <v-card
-            class="mx-auto"
-            max-width="600"
-            min-width="350"
-            variant="elevated"
-          >
-            <login-form @onLogin="onLogin"></login-form>
-          </v-card>
-
-          <p class="text-center mt-2">
-            <router-link
-              to="/forgot"
-              class="text-decoration-underline text-white"
+emailct<template>
+    <v-container class="fill-height d-flex align-center justify-center">
+        <v-row>
+            <!-- Login Form Column -->
+            <v-col
+                cols="12"
+                md="6"
             >
-              Forgot Password
-            </router-link>
-          </p>
-        </v-col>
-      </v-row>
-    </v-responsive>
-  </v-container>
+                <v-sheet
+                    width="800"
+                    rounded
+                    border
+                >
+                    <v-container class="px-4 py-4">
+                        <v-img
+                            class="mb-4 d-block m-auto"
+                            width="60"
+                            min-width="60"
+                            src="./../../assets/logo.png"
+                        ></v-img>
+                        <v-row>
+                            <v-col class="px-8">
+                                <h2 class="text-center mb-4">Login</h2>
+                                <v-text-field
+                                    v-model="email"
+                                    :disabled="isLoading"
+                                    variant="outlined"
+                                    label="Email"
+                                    required
+                                    density="compact"
+                                    @keydown.enter.prevent="onClickLogin"
+                                ></v-text-field>
+                                <v-text-field
+                                    v-model="password"
+                                    :disabled="isLoading"
+                                    variant="outlined"
+                                    type="password"
+                                    label="Password"
+                                    required
+                                    density="compact"
+                                    @keydown.enter.prevent="onClickLogin"
+                                    :error-messages="isError
+                                        ? ['Wrong contact number or password']
+                                        : []
+                                        "
+                                ></v-text-field>
+                                <v-btn
+                                    block
+                                    :disabled="isLoading"
+                                    :loading="isLoading"
+                                    color="primary"
+                                    @click="onClickLogin"
+                                >Login</v-btn>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-sheet>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
+<script setup>
+import { ref } from "vue";
+import api from "./../../api";
+import router from "@/plugins/router";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 
-<script>
+const store = useStore();
+const route = useRoute();
 
-import LoginForm from './../../components/LoginForm.vue';
+const isLoading = ref(false);
+const isError = ref(false);
+const email = ref("");
+const password = ref("");
 
-export default {
-  components: {
-    LoginForm
-  },
+const onClickLogin = async () => {
+    try {
+        isLoading.value = true;
+        const { data } = await api.auth.login({
+            email: email.value,
+            password: password.value,
+        });
 
-  methods: {
-    async onLogin({ accessToken }) {
-      try {
-        await this.$root.login(accessToken);
-        this.$router.push('/dashboard');
-      } catch (error) {
-        await this.$root.errorHandler(error);
-      }
-    },
-  },
+        localStorage.setItem("AccessToken", data.accessToken);
+        api.setJWT(data.accessToken);
+
+        const { data: user } = await api.user.get();
+        store.commit("setUser", user);
+
+        if (route.query.redirect) {
+            router.push(atob(route.query.redirect));
+        } else {
+            router.push("/");
+        }
+    } catch (error) {
+        isLoading.value = false;
+        isError.value = true;
+        console.error(error);
+    }
 };
 </script>

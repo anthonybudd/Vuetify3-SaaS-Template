@@ -1,25 +1,20 @@
-import { createStore } from 'vuex';
+import { createStore } from "vuex";
 
 export default createStore({
     state: {
-        user: false,
-        group: false,
+        user: null,
+        group: null,
     },
     mutations: {
-        setUser(state, user) {
-            state.user = user;
+        setUser(state, payload) {
+            state.user = payload;
         },
-        setGroup(state, group) {
-            state.group = group;
-            state.user.isOwner = (state.group.ownerID === state.user.id);
-            localStorage.setItem('lastGroupID', group.id);
+        setGroup(state, payload) {
+            state.group = payload;
         },
     },
     getters: {
-        user: (state) => (state.user),
-        group: (state) => (state.group),
-    },
-    actions: {
-
-    },
+        user: ({ user }) => (user),
+        group: ({ group }) => (group),
+    }
 });
