@@ -69,6 +69,14 @@
                             >
                                 Group Owner
                             </v-chip>
+                            <v-chip
+                                v-else-if="user.id === item.id"
+                                color="info"
+                                size="x-small"
+                                label
+                            >
+                                You
+                            </v-chip>
                         </template>
                         <template v-slot:item.lastLoginAt="{ item }">
                             <span v-if="item.lastLoginAt">{{ $formatDate(item.lastLoginAt, 'll') }}</span>
@@ -176,6 +184,7 @@ const rules = inject('rules');
 const api = inject('api');
 const store = useStore();
 
+const user = computed(() => store.state.user);
 const group = computed(() => store.state.group);
 const isValid = ref(true);
 const isLoading = ref(true);
