@@ -1,13 +1,17 @@
-emailct<template>
-    <v-container class="fill-height d-flex align-center justify-center">
-        <v-row>
-            <!-- Login Form Column -->
+<template>
+    <v-container
+        class="fill-height"
+        fluid
+    >
+        <v-row
+            align="center"
+            justify="center"
+        >
             <v-col
-                cols="12"
-                md="6"
+                cols="3"
+                class="text-center"
             >
                 <v-sheet
-                    width="800"
                     rounded
                     border
                 >

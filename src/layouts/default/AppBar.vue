@@ -39,6 +39,7 @@
                                 variant="outlined"
                                 v-bind="props"
                                 class="px-1"
+                                :disabled="disabled"
                             >
                                 <v-icon
                                     icon="mdi-account"
@@ -61,8 +62,11 @@
                                     <span class="text-medium-emphasis">{{ user.email }}</span>
                                 </p>
                             </v-card-text>
-                            <v-divider></v-divider>
-                            <v-list class="pb-0 pt-0">
+                            <v-divider v-if="groups.length > 1"></v-divider>
+                            <v-list
+                                class="pb-0 pt-0"
+                                v-if="groups.length > 1"
+                            >
                                 <v-list-group value="Groups">
                                     <template v-slot:activator="{ props }">
                                         <v-list-item
@@ -76,6 +80,7 @@
                                         :key="i"
                                         :title="g.name"
                                         :value="g.id"
+                                        :disabled="drawer.id === group.id"
                                         @click="changeGroup(g.id)"
                                     ></v-list-item>
                                 </v-list-group>
@@ -96,6 +101,7 @@
                         :to="menuItem.href"
                         :key="menuItem.text"
                         :text="menuItem.text"
+                        :disabled="disabled"
                         :active="((menuItem.text == 'Dashboard' && $route.path === '/') || (menuItem.text != 'Dashboard' && $route.path.includes(menuItem.href)))"
                         variant="text"
                     ></v-btn>
@@ -112,6 +118,7 @@
                 :to="menuItem.href"
                 :key="menuItem.text"
                 :title="menuItem.text"
+                :disabled="disabled"
                 link
             ></v-list-item>
         </v-navigation-drawer>
@@ -119,23 +126,28 @@
 </template>
 
 <script setup>
-import { useNotification } from '@kyvg/vue3-notification';
 import { useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify';
-import { ref, computed, inject } from 'vue';
+import { ref, toRefs, computed, inject } from 'vue';
 import { useStore } from 'vuex';
+import emitter from 'tiny-emitter/instance';
 
 const api = inject('api');
 const errorHandler = inject('errorHandler');
-const { notify } = useNotification();
 const store = useStore();
-const { xs } = useDisplay();
 const router = useRouter();
+const { xs } = useDisplay();
+const props = defineProps({
+    disabled: Boolean,
+});
 
-const drawer = ref(false);
-const user = computed(() => store.state.user);
+
+
+const { disabled } = toRefs(props);
 const group = computed(() => store.state.group);
+const user = computed(() => store.state.user);
 const groups = ref(user.value.Groups);
+const drawer = ref(false);
 const menu = ref(false);
 
 const menuItems = [
@@ -152,9 +164,9 @@ router.beforeEach((to, from, next) => {
 const changeGroup = async (groupID) => {
     try {
         const { data: group } = await api.group.get(groupID);
+        emitter.emit('onChangeGroup');
         store.commit('setGroup', group);
         menu.value = false;
-        notify(`Changed group to ${group.name}`);
         localStorage.setItem('lastGroupID', group.id);
     } catch (error) {
         errorHandler(error);

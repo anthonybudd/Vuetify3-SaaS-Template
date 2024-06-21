@@ -54,6 +54,13 @@
                         <template v-slot:item.name="{ item }">
                             {{ item.firstName }} {{ item.lastName }}
 
+                            <span
+                                v-if="!item.firstName && !item.lastName"
+                                class="text-disabled"
+                            >
+                                Unkown
+                            </span>
+
                             <v-chip
                                 v-if="group.ownerID === item.id"
                                 color="info"
