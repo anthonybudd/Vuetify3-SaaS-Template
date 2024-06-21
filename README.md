@@ -19,3 +19,33 @@ npm run dev
 
 open localhost:3000 # user@example.com / Password@1234
 ```
+
+
+## Features
+
+#### Vue3 Composition API
+The Vue3 Composition API has been used throughout this project.
+
+<img height="200" src="https://raw.githubusercontent.com/anthonybudd/Vuetify3-SaaS-Boilerplate/main/public/img/composition-api.png">
+
+
+
+
+#### Group Admin
+You can add and remove users from your group and set their access level within your group.
+
+<img height="200" src="https://raw.githubusercontent.com/anthonybudd/Vuetify3-SaaS-Boilerplate/main/public/img/groups.png">
+
+
+
+#### Group Switching
+Switch between groups without needing to log-out
+
+<img height="200" src="https://raw.githubusercontent.com/anthonybudd/Vuetify3-SaaS-Boilerplate/main/public/img/group-switching.png">
+
+
+#### Chart.js
+Chart.js has been installed an examples can be found in [./src/views/Dashboard.vue](./src/views/Dashboard.vue)
+
+<img height="200" src="https://raw.githubusercontent.com/anthonybudd/Vuetify3-SaaS-Boilerplate/main/public/img/chart-js.png">
+
