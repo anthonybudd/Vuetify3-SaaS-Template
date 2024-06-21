@@ -2,7 +2,7 @@
     <div>
         <v-app-bar
             flat
-            :height="(xs) ? 80 : 150"
+            :height="(xs) ? 80 : 162"
         >
             <v-container
                 fluid
@@ -100,6 +100,7 @@
                         variant="text"
                     ></v-btn>
                 </v-container>
+                <v-divider></v-divider>
             </v-container>
         </v-app-bar>
         <v-navigation-drawer

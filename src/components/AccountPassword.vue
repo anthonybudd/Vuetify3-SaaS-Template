@@ -39,10 +39,13 @@
                         label="New Password"
                         variant="outlined"
                         density="compact"
-                        type="password"
                         class="mb-4"
                         :rules="[rules.required]"
                         required
+                        :append-inner-icon="isVisible ? 'mdi-eye-off' : 'mdi-eye'"
+                        :type="isVisible ? 'text' : 'password'"
+                        placeholder="Enter your new password"
+                        @click:append-inner="isVisible = !isVisible"
                     ></v-text-field>
                 </v-col>
                 <v-col
@@ -72,15 +75,13 @@ import { ref, inject } from 'vue';
 
 const errorHandler = inject('errorHandler');
 const { notify } = useNotification();
+const rules = inject('rules');
 const api = inject('api');
-
-const rules = {
-    required: (value) => !!value || 'This field is required.',
-};
 
 const errors = ref({});
 const password = ref('');
 const newPassword = ref('');
+const isVisible = ref(false);
 const isValid = ref(false);
 const isLoading = ref(false);
 

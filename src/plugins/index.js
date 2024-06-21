@@ -19,6 +19,10 @@ export function registerPlugins(app) {
             install: (app) => {
                 app.provide('errorHandler', errorHandler);
                 app.provide('api', api);
+                app.provide('rules', {
+                    required: (value) => !!value || 'This field is required.',
+                    isEmail: (value) => !value || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || 'Must be valid email'
+                });
 
                 app.config.globalProperties.$formatDate = (timestamp, format = 'lll') => {
                     if (timestamp === undefined || timestamp === null) return '';

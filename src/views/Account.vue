@@ -12,10 +12,10 @@
                 border
             >
                 <v-card-text>
-                    <v-container class="px-4 py-4 d-flex align-center justify-center">
+                    <v-container class="align-center justify-center">
                         <v-row>
                             <v-col
-                                md="4"
+                                md="3"
                                 cols="12"
                                 class="text-center"
                             >
@@ -39,7 +39,7 @@
                             </v-col>
                             <v-divider :vertical="!sm && !xs"></v-divider>
                             <v-col
-                                md="8"
+                                md="9"
                                 cols="12"
                             >
                                 <AccountUser />

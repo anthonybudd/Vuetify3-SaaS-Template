@@ -10,14 +10,18 @@ class Group extends Service {
     }
 
     invite(groupID, email) {
-        return this.axios.post(`/groups/${groupID}`, { email });
+        return this.axios.post(`/groups/${groupID}/users/invite`, { email });
+    }
+
+    resendInvitationEmail(groupID, userID) {
+        return this.axios.post(`/groups/${groupID}/users/${userID}/resend-invitation-email`);
     }
 
     setRole(groupID, userID, role) {
         return this.axios.post(`/groups/${groupID}/users/${userID}/set-role`, { role });
     }
 
-    delete(groupID, userID) {
+    remove(groupID, userID) {
         return this.axios.delete(`/groups/${groupID}/users/${userID}`);
     }
 }
