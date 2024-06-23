@@ -42,14 +42,24 @@ onMounted(async () => {
             for (const g of user.Groups) {
                 if (g.id === lastGroupID) lastGroup = g;
             }
-            if (lastGroup) {
-                const { data: group } = await api.group.get(lastGroup.id);
-                store.commit('setGroup', group);
-            } else if (user.Groups[0]) {
+
+            const useZerothGroup = async () => {
                 const { data: group } = await api.group.get(user.Groups[0].id);
                 store.commit('setGroup', group);
+            };
+
+            if (lastGroup) {
+                try {
+                    const { data: group } = await api.group.get(lastGroup.id);
+                    store.commit('setGroup', group);
+                } catch (e) {
+                    useZerothGroup();
+                }
+            } else if (user.Groups[0]) {
+                useZerothGroup();
             }
-        } catch (e) {
+        } catch (error) {
+            console.error(error);
             errorHandler(error, (data, code, error) => {
                 router.push('/logout');
             });
