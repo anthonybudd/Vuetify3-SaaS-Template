@@ -17,7 +17,7 @@ cp .env.example .env
 npm i
 npm run dev
 
-open localhost:3000 # user@example.com / Password@1234
+open http://localhost:3000 # user@example.com / Password@1234
 ```
 
 
@@ -39,7 +39,7 @@ You can add and remove users from your group and set their access level within y
 
 
 #### Group Switching
-Switch between groups without needing to log-out
+Switch between the groups you have access to without needing to log-out
 
 <img height="200" src="https://raw.githubusercontent.com/anthonybudd/Vuetify3-SaaS-Boilerplate/main/public/img/group-switching.png">
 

@@ -44,7 +44,7 @@
                                     density="compact"
                                     @keydown.enter.prevent="onClickLogin"
                                     :error-messages="isError
-                                        ? ['Wrong contact number or password']
+                                        ? ['Incorrect email or password']
                                         : []
                                         "
                                 ></v-text-field>

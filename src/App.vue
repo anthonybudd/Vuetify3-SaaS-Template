@@ -46,7 +46,7 @@ onMounted(async () => {
                 const { data: group } = await api.group.get(lastGroup.id);
                 store.commit('setGroup', group);
             } else if (user.Groups[0]) {
-                const { data: group } = await api.groups.get(user.Groups[0].id);
+                const { data: group } = await api.group.get(user.Groups[0].id);
                 store.commit('setGroup', group);
             }
         } catch (e) {
