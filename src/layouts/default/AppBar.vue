@@ -62,12 +62,12 @@
                                     <span class="text-medium-emphasis">{{ user.email }}</span>
                                 </p>
                             </v-card-text>
-                            <v-divider v-if="groups.length > 1"></v-divider>
-                            <v-list
-                                class="pb-0 pt-0"
-                                v-if="groups.length > 1"
-                            >
-                                <v-list-group value="Groups">
+                            <v-divider></v-divider>
+                            <v-list class="pb-0 pt-0">
+                                <v-list-group
+                                    v-if="groups.length > 1"
+                                    value="Groups"
+                                >
                                     <template v-slot:activator="{ props }">
                                         <v-list-item
                                             v-bind="props"

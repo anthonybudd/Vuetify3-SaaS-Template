@@ -7,6 +7,8 @@ import router from './router';
 import moment from 'moment';
 import store from './store';
 
+import './../styles/custom.scss';
+
 export function registerPlugins(app) {
     loadFonts();
     app

@@ -56,6 +56,7 @@ import { useStore } from 'vuex';
 import { useDisplay } from 'vuetify';
 import AccountUser from './../components/AccountUser';
 import AccountPassword from './../components/AccountPassword';
+import AccountAddress from './../components/AccountAddress';
 import Groups from './../components/Groups';
 
 const { sm, xs } = useDisplay();

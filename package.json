@@ -1,10 +1,10 @@
 {
-    "name": "vuetify3-saas-boilerplate",
+    "name": "vuetify3-saas-temaplate",
     "version": "1.0.0",
     "author": "Anthony Budd",
     "repository": {
         "type": "git",
-        "url": "https://github.com/anthonybudd/vuetify3-saas-boilerplate.git"
+        "url": "https://github.com/anthonybudd/vuetify3-saas-temaplate.git"
     },
     "scripts": {
         "dev": "vite",
