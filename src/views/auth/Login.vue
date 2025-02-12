@@ -8,7 +8,9 @@
             justify="center"
         >
             <v-col
-                cols="3"
+                md="3"
+                sm="6"
+                xs="12"
                 class="text-center"
             >
                 <v-sheet
