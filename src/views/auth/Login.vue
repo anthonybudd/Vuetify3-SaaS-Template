@@ -65,19 +65,28 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, inject } from "vue";
 import api from "./../../api";
 import router from "@/plugins/router";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
+import { onAccessToken } from "@/plugins/router";
 
 const store = useStore();
 const route = useRoute();
+const $cookies = inject('$cookies');
 
 const isLoading = ref(false);
 const isError = ref(false);
 const email = ref("");
 const password = ref("");
+
+onMounted(() => {
+    if (window.location.href.includes('localhost')) {
+        email.value = 'user@example.com';
+        password.value = 'Password@1234';
+    }
+});
 
 const onClickLogin = async () => {
     try {
@@ -87,16 +96,12 @@ const onClickLogin = async () => {
             password: password.value,
         });
 
-        localStorage.setItem("AccessToken", data.accessToken);
-        api.setJWT(data.accessToken);
-
-        const { data: user } = await api.user.get();
-        store.commit("setUser", user);
+        await onAccessToken(data.accessToken, $cookies, store);
 
         if (route.query.redirect) {
             router.push(atob(route.query.redirect));
         } else {
-            router.push("/");
+            router.push('/');
         }
     } catch (error) {
         isLoading.value = false;

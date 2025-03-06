@@ -1,6 +1,7 @@
 import Notifications from '@kyvg/vue3-notification';
 import { loadFonts } from './webfontloader';
 import errorHandler from './errorHandler';
+import VueCookies from 'vue-cookies';
 import api from './../api/index.js';
 import vuetify from './vuetify';
 import router from './router';
@@ -16,6 +17,7 @@ export function registerPlugins(app) {
         .use(store)
         .use(vuetify)
         .use(router)
+        .use(VueCookies, { expires: '7d' })
         .use({
             install: (app) => {
                 app.provide('errorHandler', errorHandler);

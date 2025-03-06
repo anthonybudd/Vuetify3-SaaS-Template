@@ -146,7 +146,7 @@ const props = defineProps({
 const { disabled } = toRefs(props);
 const group = computed(() => store.state.group);
 const user = computed(() => store.state.user);
-const groups = ref(user.value.Groups);
+const groups = ref(user.value.groups);
 const drawer = ref(false);
 const menu = ref(false);
 

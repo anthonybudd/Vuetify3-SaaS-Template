@@ -207,7 +207,7 @@ const getData = async () => {
     try {
         isLoading.value = true;
         const { data } = await api.group.get(group.value.id);
-        items.value = data.Users;
+        items.value = data.users;
     } catch (error) {
         errorHandler(error);
     } finally {

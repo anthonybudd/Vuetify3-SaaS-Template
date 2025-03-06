@@ -25,7 +25,7 @@
                     <div class="code">
                         <pre>
 <code>npm run generate -- --model="Book"
-npm run _db:refresh</code>
+npm run exec:db:refresh</code>
                         </pre>
                     </div>
                 </v-alert>
