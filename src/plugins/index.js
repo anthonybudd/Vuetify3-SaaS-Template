@@ -5,10 +5,16 @@ import VueCookies from 'vue-cookies';
 import api from './../api/index.js';
 import vuetify from './vuetify';
 import router from './router';
-import moment from 'moment';
 import store from './store';
+import dayjs from 'dayjs';
 
 import './../styles/custom.scss';
+
+import relativeTime from 'dayjs/plugin/relativeTime';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+
+dayjs.extend(relativeTime);
+dayjs.extend(advancedFormat);
 
 export function registerPlugins(app) {
     loadFonts();
@@ -27,9 +33,14 @@ export function registerPlugins(app) {
                     isEmail: (value) => !value || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || 'Must be valid email'
                 });
 
-                app.config.globalProperties.$formatDate = (timestamp, format = 'lll') => {
+                app.config.globalProperties.$formatDate = (timestamp, format = 'Do MMM YY H:mm') => {
                     if (timestamp === undefined || timestamp === null) return '';
-                    return moment(timestamp).format(format);
+                    return dayjs(timestamp).format(format);
+                };
+
+                app.config.globalProperties.$ago = (timestamp) => {
+                    if (timestamp === undefined || timestamp === null) return '';
+                    return dayjs().to(dayjs(timestamp));
                 };
             },
         });

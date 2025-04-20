@@ -14,6 +14,17 @@ export default defineConfig(({ mode }) => {
         base: '/',
         build: {
             outDir: './dist',
+            cssCodeSplit: false,
+            minify: 'esbuild',
+            rollupOptions: {
+                output: {
+                    manualChunks: null,
+                    entryFileNames: 'assets/[name].js',
+                    chunkFileNames: 'assets/[name].js',
+                    assetFileNames: 'assets/[name].[ext]',
+                    inlineDynamicImports: true
+                },
+            },
         },
         plugins: [
             vue({

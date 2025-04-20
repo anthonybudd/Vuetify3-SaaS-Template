@@ -91,7 +91,7 @@ import DashboardStats from '@/components/DashboardStats.vue';
 import { ref, computed, inject, onMounted } from 'vue';
 import { useNotification } from '@kyvg/vue3-notification';
 import { useStore } from 'vuex';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, ArcElement, Legend } from 'chart.js';
 import { Line, Pie } from 'vue-chartjs';
 
@@ -107,7 +107,7 @@ const store = useStore();
 
 const lineChart = {
     data: {
-        labels: Array.from(Array(14).keys()).map((i) => moment().subtract(i, 'days').format('D MMM')).reverse(),
+        labels: Array.from(Array(14).keys()).map((i) => dayjs().subtract(i, 'days').format('D MMM')).reverse(),
         datasets: [
             {
                 label: 'Daily Sales',
