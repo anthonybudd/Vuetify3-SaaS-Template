@@ -1,5 +1,5 @@
 <template>
-    <v-container class="fill-height">
+    <v-container>
         <h1 class="text-h5 font-weight-bold mb-4">Account</h1>
         <v-sheet
             width="100%"
@@ -21,8 +21,7 @@
                                 class="initals-btn"
                                 readonly
                             >
-                                {{ user.firstName.charAt(0).toUpperCase() }}.{{
-                                    user.lastName.charAt(0).toUpperCase() }}
+                                {{ initals }}
                             </v-btn>
                             <p class="text-medium-emphasis">{{ user.id }}</p>
                             <h2 class="ml-4">
@@ -41,7 +40,7 @@
                             <v-divider></v-divider>
                             <AccountPassword />
                             <v-divider></v-divider>
-                            <Groups />
+                            <Groups v-if="user.groups" />
                         </v-col>
                     </v-row>
                 </v-container>
@@ -54,12 +53,17 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { useDisplay } from 'vuetify';
-import AccountUser from './../components/AccountUser';
-import AccountPassword from './../components/AccountPassword';
-import Groups from './../components/Groups';
+import AccountUser from '@/components/AccountUser';
+import AccountPassword from '@/components/AccountPassword';
+import Groups from '@/components/Groups';
 
 const { sm, xs } = useDisplay();
 
 const store = useStore();
 const user = computed(() => store.state.user);
+
+const initals = computed(() => {
+    if (!user.value) return '';
+    return user.value.firstName.charAt(0).toUpperCase() + user.value.lastName.charAt(0).toUpperCase();
+});
 </script>

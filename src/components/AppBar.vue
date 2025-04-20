@@ -18,7 +18,7 @@
                     <div class="d-flex align-center justify-center">
                         <v-img
                             :width="(xs) ? 40 : 60"
-                            src="./../../assets/logo.png"
+                            src="@/assets/logo.png"
                         ></v-img>
                         <h1
                             v-if="!xs"
@@ -65,7 +65,7 @@
                             <v-divider></v-divider>
                             <v-list class="pb-0 pt-0">
                                 <v-list-group
-                                    v-if="groups.length > 1"
+                                    v-if="groups && groups.length > 1"
                                     value="Groups"
                                 >
                                     <template v-slot:activator="{ props }">
@@ -140,8 +140,6 @@ const { xs } = useDisplay();
 const props = defineProps({
     disabled: Boolean,
 });
-
-
 
 const { disabled } = toRefs(props);
 const group = computed(() => store.state.group);

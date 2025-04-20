@@ -22,7 +22,7 @@
                             class="mb-4 d-block m-auto"
                             width="60"
                             min-width="60"
-                            src="./../../assets/logo.png"
+                            src="@/assets/logo.png"
                         ></v-img>
                         <v-row>
                             <v-col class="px-8">
@@ -68,15 +68,15 @@
 
 <script setup>
 import { ref, onMounted, inject } from "vue";
-import api from "./../../api";
 import router from "@/plugins/router";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import { onAccessToken } from "@/plugins/router";
+import onAccessToken from "@/plugins/onAccessToken";
 
 const store = useStore();
 const route = useRoute();
 const $cookies = inject('$cookies');
+const api = inject('api');
 
 const isLoading = ref(false);
 const isError = ref(false);
@@ -106,9 +106,10 @@ const onClickLogin = async () => {
             router.push('/');
         }
     } catch (error) {
-        isLoading.value = false;
         isError.value = true;
         console.error(error);
+    } finally {
+        isLoading.value = false;
     }
 };
 </script>

@@ -1,39 +1,92 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useStore } from "vuex";
 import { inject } from 'vue';
+import onAccessToken from './onAccessToken';
 
-import api from './../api';
+export default createRouter({
+    history: createWebHistory(),
+    routes: [
+        {
+            path: '/',
+            component: () => import('@/layouts/Default.vue'),
+            beforeEnter: async (to, from, next) => await authGuard(to, from, next, true),
+            children: [
+                {
+                    path: '',
+                    name: 'Dashboard',
+                    component: () => import('@/views/Dashboard.vue'),
+                },
+                {
+                    path: '/books',
+                    name: 'Books',
+                    component: () => import('@/views/BooksIndex.vue'),
+                },
+                {
+                    path: '/books/:bookID',
+                    name: 'BookSingle',
+                    component: () => import('@/views/BookSingle.vue'),
+                },
+                {
+                    path: '/account',
+                    name: 'Account',
+                    component: () => import('@/views/Account.vue'),
+                },
+            ],
+        },
 
-export const onAccessToken = async (accessToken, $cookies, store) => {
-    $cookies.set('AccessToken', accessToken);
-    api.setJWT(accessToken);
-    const { data: user } = await api.user.get();
-    store.commit('setUser', user);
-    store.commit('setAuth', true);
+        {
+            path: '/',
+            component: () => import('@/layouts/Auth.vue'),
+            children: [
+                {
+                    path: '/login',
+                    name: 'Login',
+                    component: () => import('@/views/Login.vue'),
+                },
+                {
+                    path: '/sign-up',
+                    name: 'SignUp',
+                    component: () => import('@/views/Login.vue'),
+                },
+                {
+                    path: '/forgot-password',
+                    name: 'ForgotPassword',
+                    component: () => import('@/views/Login.vue'),
+                },
+                {
+                    path: '/reset-password',
+                    name: 'ResetPassword',
+                    component: () => import('@/views/Login.vue'),
+                },
+                {
+                    path: '/logout',
+                    name: 'Logout',
+                    beforeEnter: async (to, from, next) => {
+                        console.warn('/logout');
+                        localStorage.removeItem('AccessToken');
+                        if (to.query.redirect) {
+                            next(`/login?redirect=${to.query.redirect}`);
+                        } else {
+                            next('/login');
+                        }
+                    },
+                },
+            ],
+        },
 
-    let lastGroupID = localStorage.getItem('lastGroupID');
-    if (lastGroupID) {
-        for (const { id } of user.groups) {
-            if (id === lastGroupID) lastGroupID = id;
-        }
-    }
-    const useZerothGroup = async () => {
-        if (user.groups && user.groups[0]) {
-            const { data: group } = await api.group.get(user.groups[0].id);
-            store.commit('setGroup', group);
-        }
-    };
-    if (lastGroupID) {
-        try {
-            const { data: group } = await api.group.get(lastGroup.id);
-            store.commit('setGroup', group);
-        } catch (e) {
-            useZerothGroup();
-        }
-    } else {
-        useZerothGroup();
-    }
-};
+        {
+            path: '/:pathMatch(.*)*',
+            component: () => import('@/layouts/Default.vue'),
+            children: [
+                {
+                    path: '',
+                    component: () => import('@/views/404.vue'),
+                },
+            ],
+        },
+    ]
+});
+
 
 const authGuard = async (to, from, next, redirect = true) => {
     const store = useStore();
@@ -64,77 +117,3 @@ const authGuard = async (to, from, next, redirect = true) => {
         }
     }
 };
-
-export default createRouter({
-    history: createWebHistory(),
-    routes: [
-        {
-            path: '/',
-            component: () => import('@/layouts/default/Default.vue'),
-            beforeEnter: async (to, from, next) =>
-                await authGuard(to, from, next, true),
-            children: [
-                {
-                    path: '',
-                    name: 'Dashboard',
-                    component: () => import('@/views/Dashboard.vue'),
-                },
-                {
-                    path: '/books',
-                    name: 'Books',
-                    component: () => import('@/views/BooksIndex.vue'),
-                },
-                {
-                    path: '/books/:bookID',
-                    name: 'BookSingle',
-                    component: () => import('@/views/BookSingle.vue'),
-                },
-                {
-                    path: '/account',
-                    name: 'Account',
-                    component: () => import('@/views/Account.vue'),
-                },
-            ],
-        },
-
-        {
-            path: '/',
-            component: () => import('@/layouts/default/Auth.vue'),
-            children: [
-                {
-                    path: '/login',
-                    name: 'Login',
-                    component: () => import('@/views/Auth/Login.vue'),
-                },
-                {
-                    path: '/sign-up',
-                    name: 'SignUp',
-                    component: () => import('@/views/Auth/Login.vue'),
-                },
-                {
-                    path: '/forgot-password',
-                    name: 'ForgotPassword',
-                    component: () => import('@/views/Auth/Login.vue'),
-                },
-                {
-                    path: '/reset-password',
-                    name: 'ResetPassword',
-                    component: () => import('@/views/Auth/Login.vue'),
-                },
-                {
-                    path: '/logout',
-                    name: 'Logout',
-                    beforeEnter: async (to, from, next) => {
-                        console.warn('/logout');
-                        localStorage.removeItem('AccessToken');
-                        if (to.query.redirect) {
-                            next(`/login?redirect=${to.query.redirect}`);
-                        } else {
-                            next('/login');
-                        }
-                    },
-                },
-            ],
-        },
-    ]
-});
