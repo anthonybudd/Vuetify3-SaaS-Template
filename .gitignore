@@ -4,6 +4,7 @@ node_modules
 ToDo.md
 
 # local env files
+.env
 .env.local
 .env.*.local
 
